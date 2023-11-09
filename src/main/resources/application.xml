@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="driver" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="postgresDriver"/>
+    </bean>
+
+    <bean name="connectionPool" class="com.dmdev.spring.database.pool.ConnectionPool">
+        <constructor-arg name="name" type="java.lang.String" value="pool"/>
+        <constructor-arg name="poolSize" type="java.lang.Integer" value="5"/>
+        <constructor-arg name="args" type="java.util.List">
+            <list>
+                <value>--arg1=value1</value>
+                <value>--arg2=value2</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg name="properties" type="java.util.Map">
+            <map>
+                <entry key="url" value="postgresurl"/>
+                <entry key="password" value="1234567"/>
+                <entry key="driver" value-ref="driver"/>
+            </map>
+        </constructor-arg>
+
+    </bean>
+
+    <bean name="companyRepository" class="com.dmdev.spring.database.repository.CompanyRepository" factory-method="of">
+        <constructor-arg ref="connectionPool"/>
+    </bean>
+</beans>
