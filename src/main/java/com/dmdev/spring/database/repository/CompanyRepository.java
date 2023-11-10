@@ -9,7 +9,7 @@ public class CompanyRepository {
         this.connectionPool = connectionPool;
     }
 
-    private static CompanyRepository of(ConnectionPool connectionPool) {
+    public static CompanyRepository of(ConnectionPool connectionPool) {
         return new CompanyRepository(connectionPool);
     }
 }
