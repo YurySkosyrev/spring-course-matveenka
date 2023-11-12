@@ -7,44 +7,31 @@
                              http://www.springframework.org/schema/context
                              http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-<!--    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">-->
-<!--        <property name="locations" value="application.properties"/>-->
-<!--    </bean>-->
 
-    <context:annotation-config/>
+    <context:component-scan base-package="com.dmdev.spring"/>
     <context:property-placeholder location="classpath:application.properties"/>
-
-    <bean class="com.dmdev.spring.bfpp.LogBeanFactoryPostProcessor"/>
-    <bean class="com.dmdev.spring.bfpp.VerifyPropertyBeanFactoryPostProcessor"/>
-    <bean class="com.dmdev.spring.bpp.TransactionBeanPostProcessor"/>
-    <bean class="com.dmdev.spring.bpp.InjectBeanPostProcessor"/>
-<!--    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
 
     <bean name="driver" class="java.lang.String">
         <constructor-arg type="java.lang.String" value="${db.driver}"/>
     </bean>
 
-    <bean name="connectionPool" class="com.dmdev.spring.database.pool.ConnectionPool">
-        <constructor-arg name="name" type="java.lang.String" value="${db.username}"/>
-        <constructor-arg name="poolSize" type="java.lang.Integer" value="${db.pool.size}"/>
-        <constructor-arg name="args" type="java.util.List">
-            <list>
-                <value>--arg1=value1</value>
-                <value>--arg2=value2</value>
-            </list>
-        </constructor-arg>
-        <constructor-arg name="properties" type="java.util.Map">
-           <null/>
-        </constructor-arg>
-        <property name="properties">
-            <map>
-                <entry key="url" value="postgresurl"/>
-                <entry key="password" value="1234567"/>
-                <entry key="driver" value-ref="driver"/>
-            </map>
-        </property>
-
-    </bean>
-
     <bean name="companyRepository" class="com.dmdev.spring.database.repository.CompanyRepository"/>
 </beans>
+
+
+<!--<constructor-arg name="args" type="java.util.List">-->
+<!--<list>-->
+<!--    <value>&#45;&#45;arg1=value1</value>-->
+<!--    <value>&#45;&#45;arg2=value2</value>-->
+<!--</list>-->
+<!--</constructor-arg>-->
+<!--<constructor-arg name="properties" type="java.util.Map">-->
+<!--<null/>-->
+<!--</constructor-arg>-->
+<!--<property name="properties">-->
+<!--<map>-->
+<!--    <entry key="url" value="postgresurl"/>-->
+<!--    <entry key="password" value="1234567"/>-->
+<!--    <entry key="driver" value-ref="driver"/>-->
+<!--</map>-->
+<!--</property>-->
