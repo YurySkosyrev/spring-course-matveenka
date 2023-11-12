@@ -24,7 +24,7 @@ public class TransactionBeanPostProcessor implements BeanPostProcessor {
 
         Class<?> beanClass = transactionalAnnotationsBeans.get(beanName);
         if(beanClass != null) {
-            Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(),
+            return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(),
                     (object, method, args) -> {
                         System.out.println("Open transaction");
                         try {

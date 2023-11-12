@@ -14,14 +14,19 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        Arrays.stream(bean.getClass().getFields())
+        Arrays.stream(bean.getClass().getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(InjectBean.class))
                 .forEach(field -> {
                     Object beanToInject = applicationContext.getBean(field.getType());
                     ReflectionUtils.makeAccessible(field);
                     ReflectionUtils.setField(field, bean, beanToInject);
                 });
-        return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
     }
 
     @Override

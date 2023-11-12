@@ -10,14 +10,13 @@ import java.util.Optional;
 
 @Transaction
 public class CompanyRepository implements CrudRepository<Integer, Company> {
+
     @InjectBean
     private ConnectionPool connectionPool;
-    @InjectBean
-    private String name;
 
     @PostConstruct
-    public void init() {
-        System.out.println("Init Company Repository");
+    private void init() {
+        System.out.println("init company repository");
     }
 
     @Override
