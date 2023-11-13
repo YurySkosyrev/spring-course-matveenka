@@ -4,6 +4,7 @@ import com.dmdev.spring.bpp.InjectBean;
 import com.dmdev.spring.bpp.Transaction;
 import com.dmdev.spring.database.pool.ConnectionPool;
 import com.dmdev.spring.entity.Company;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -19,11 +20,11 @@ public class CompanyRepository implements CrudRepository<Integer, Company> {
     private final List<ConnectionPool> pools;
     private final Integer poolSize;
 
-    public CompanyRepository(ConnectionPool pool1,
+    public CompanyRepository(@Qualifier(value = "pool2") ConnectionPool connectionPool,
                              List<ConnectionPool> pools,
                              @Value("${db.pool.size}")
                              Integer poolSize) {
-        this.pool1 = pool1;
+        this.pool1 = connectionPool;
         this.pools = pools;
         this.poolSize = poolSize;
     }
