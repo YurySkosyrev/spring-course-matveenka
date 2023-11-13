@@ -10,7 +10,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class)) {
+        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()){
+            context.register(ApplicationConfiguration.class);
+            context.getEnvironment().setActiveProfiles("web", "prod");
+            context.refresh();
             CrudRepository  companyRepository = context.getBean("companyRepository", CrudRepository.class);
             CrudRepository userRepository = context.getBean("userRepository", CrudRepository.class);
             System.out.println(companyRepository.findById(1));
