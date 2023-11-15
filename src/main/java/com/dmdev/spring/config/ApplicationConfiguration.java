@@ -21,15 +21,15 @@ includeFilters = {
 public class ApplicationConfiguration {
 
     @Bean
-    @Profile("prod|web")
+//    @Profile("prod|web")
     public ConnectionPool pool2(@Value("${db.username}")String username) {
         return new ConnectionPool(username, 66);
     }
 
     @Bean
     @Profile("prod|web")
-    public UserRepository UserRepository2(ConnectionPool pool2){
-        return new UserRepository(pool2);
+    public UserRepository UserRepository2(ConnectionPool pool1){
+        return new UserRepository(pool1);
     }
 
     @Bean

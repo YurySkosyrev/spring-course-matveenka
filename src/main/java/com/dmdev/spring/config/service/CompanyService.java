@@ -1,4 +1,4 @@
-package com.dmdev.spring.service;
+package com.dmdev.spring.config.service;
 
 import com.dmdev.spring.database.repository.CrudRepository;
 import com.dmdev.spring.dto.CompanyReadDTO;
