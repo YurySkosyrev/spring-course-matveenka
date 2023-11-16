@@ -9,15 +9,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Import(WebConfiguration.class)
-@Configuration
-@PropertySource("classpath:application.properties")
-@ComponentScan(basePackages = "com.dmdev.spring",
-useDefaultFilters = false,
-includeFilters = {
-        @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Component.class),
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CrudRepository.class),
-        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\..+Repository")
-})
+@Configuration(proxyBeanMethods = true)
 public class ApplicationConfiguration {
 
     @Bean
