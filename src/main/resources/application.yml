@@ -21,7 +21,7 @@ db:
 
 logging:
   level:
-    root: WARN
+    root: INFO
     com.dmdev.spring.database.pool.ConnectionPool: INFO
   file:
     name: dmdev.log
@@ -30,3 +30,15 @@ logging:
 spring:
   profiles:
     active: qa
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        hbm2ddl:
+          auto: validate
