@@ -2,11 +2,13 @@ package com.dmdev.spring.database.repository;
 
 import com.dmdev.spring.database.pool.ConnectionPool;
 import com.dmdev.spring.entity.Company;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
+@Primary
 public class UserRepository implements CrudRepository<Integer, Company>{
     ConnectionPool connectionPool;
 
