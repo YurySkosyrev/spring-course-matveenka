@@ -1,12 +1,13 @@
 package com.dmdev.spring.config;
 
 import com.dmdev.spring.database.pool.ConnectionPool;
-import com.dmdev.spring.database.repository.CrudRepository;
 import com.dmdev.spring.database.repository.UserRepository;
 import com.dmdev.web.config.WebConfiguration;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 
 @Import(WebConfiguration.class)
 @Configuration(proxyBeanMethods = true)
