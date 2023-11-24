@@ -7,11 +7,14 @@ import com.dmdev.spring.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 @IT
 @RequiredArgsConstructor
@@ -37,6 +40,32 @@ class UserRepositoryTest {
 
         User sameUser = userRepository.getById(1L);
         assertSame(Role.USER, sameUser.getRole());
+    }
+
+    @Test
+    void checkTopUser(){
+        Optional<User> user = userRepository.findTopByOrderByIdDesc();
+        assertTrue(user.isPresent());
+        user.ifPresent(u -> assertEquals(5L, u.getId()));
+    }
+
+    @Test
+    void checkSort(){
+        Sort sort = Sort.by("id");
+        Sort sortWithAnd = Sort.by("firstname").and(Sort.by("lastname"));
+
+        Sort.TypedSort<User> sortByFields = Sort.sort(User.class);
+        Sort sortByF = sortByFields.by(User::getFirstname).and(sortByFields.by(User::getLastname));
+
+        List<User> users = userRepository.findTop3ByBirthDateBefore(LocalDate.now(), sortByF);
+        Assertions.assertThat(users);
+    }
+
+    @Test
+    void checkPageable(){
+        PageRequest pageRequest = PageRequest.of(1, 2, Sort.by("id"));
+        List<User> users = userRepository.findAllBy(pageRequest);
+        Assertions.assertThat(users).hasSize(2);
     }
 
 }
