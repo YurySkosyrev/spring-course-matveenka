@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@NamedEntityGraph(
+        name = "User.company",
+        attributeNodes = @NamedAttributeNode("company")
+)
 @Data
 @ToString(exclude = "userChats")
 @EqualsAndHashCode(of = "username")

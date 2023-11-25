@@ -73,11 +73,11 @@ class UserRepositoryTest {
     void checkSlice(){
         PageRequest pageRequest = PageRequest.of(0, 2, Sort.by("id"));
         Slice<User> slice = userRepository.findAllBy(pageRequest);
-        slice.forEach(user -> System.out.println(user.getId()));
+        slice.forEach(user -> System.out.println(user.getCompany().getName()));
 
         while (slice.hasNext()){
             slice = userRepository.findAllBy(slice.nextPageable());
-            slice.forEach(user -> System.out.println(user.getId()));
+            slice.forEach(user -> System.out.println(user.getCompany().getName()));
         }
     }
 
