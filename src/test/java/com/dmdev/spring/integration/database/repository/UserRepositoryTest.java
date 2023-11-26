@@ -1,6 +1,8 @@
 package com.dmdev.spring.integration.database.repository;
 
 import com.dmdev.spring.database.repository.UserRepository;
+import com.dmdev.spring.dto.PersonalInfo;
+import com.dmdev.spring.dto.PersonalInfoIfc;
 import com.dmdev.spring.entity.Role;
 import com.dmdev.spring.entity.User;
 import com.dmdev.spring.integration.annotation.IT;
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @IT
@@ -26,7 +29,7 @@ class UserRepositoryTest {
     @Test
     void checkFind(){
         List<User> users = userRepository.findAllBy("a", "ov");
-        Assertions.assertThat(users).hasSize(3);
+        assertThat(users).hasSize(3);
         System.out.println(users);
     }
 
@@ -59,7 +62,7 @@ class UserRepositoryTest {
         Sort sortByF = sortByFields.by(User::getFirstname).and(sortByFields.by(User::getLastname));
 
         List<User> users = userRepository.findTop3ByBirthDateBefore(LocalDate.now(), sortByF);
-        Assertions.assertThat(users);
+        assertThat(users);
     }
 
 //    @Test
@@ -79,6 +82,15 @@ class UserRepositoryTest {
             slice = userRepository.findAllBy(slice.nextPageable());
             slice.forEach(user -> System.out.println(user.getCompany().getName()));
         }
+    }
+
+    @Test
+    void checkProjection(){
+//        List<PersonalInfo> users = userRepository.findByCompanyId(1);
+//        List<PersonalInfo> users = userRepository.findByCompanyId(1, PersonalInfo.class);
+        List<PersonalInfoIfc> users = userRepository.findByCompanyId(1);
+        assertThat(users).hasSize(2);
+        System.out.println();
     }
 
 }
