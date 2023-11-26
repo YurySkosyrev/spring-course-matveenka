@@ -3,6 +3,7 @@ package com.dmdev.spring.integration.database.repository;
 import com.dmdev.spring.database.repository.UserRepository;
 import com.dmdev.spring.dto.PersonalInfo;
 import com.dmdev.spring.dto.PersonalInfoIfc;
+import com.dmdev.spring.dto.UserFilter;
 import com.dmdev.spring.entity.Role;
 import com.dmdev.spring.entity.User;
 import com.dmdev.spring.integration.annotation.IT;
@@ -90,6 +91,13 @@ class UserRepositoryTest {
 //        List<PersonalInfo> users = userRepository.findByCompanyId(1, PersonalInfo.class);
         List<PersonalInfoIfc> users = userRepository.findByCompanyId(1);
         assertThat(users).hasSize(2);
+        System.out.println();
+    }
+
+    @Test
+    void checkCustomImpl(){
+        UserFilter filter = new UserFilter(null, "%ov%", LocalDate.now());
+        List<User> users = userRepository.findAllByFilter(filter);
         System.out.println();
     }
 
