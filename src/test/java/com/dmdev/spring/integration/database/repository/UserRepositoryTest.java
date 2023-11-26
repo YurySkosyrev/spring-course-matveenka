@@ -1,14 +1,12 @@
 package com.dmdev.spring.integration.database.repository;
 
 import com.dmdev.spring.database.repository.UserRepository;
-import com.dmdev.spring.dto.PersonalInfo;
 import com.dmdev.spring.dto.PersonalInfoIfc;
 import com.dmdev.spring.dto.UserFilter;
 import com.dmdev.spring.entity.Role;
 import com.dmdev.spring.entity.User;
 import com.dmdev.spring.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -101,4 +99,11 @@ class UserRepositoryTest {
         System.out.println();
     }
 
+    @Test
+    void checkAuditing(){
+        User user = userRepository.findById(1L).get();
+        user.setBirthDate(user.getBirthDate().plusYears(1L));
+        userRepository.flush();
+        System.out.println();
+    }
 }
