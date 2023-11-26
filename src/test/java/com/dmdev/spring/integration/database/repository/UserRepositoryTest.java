@@ -7,10 +7,13 @@ import com.dmdev.spring.entity.Role;
 import com.dmdev.spring.entity.User;
 import com.dmdev.spring.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Comment;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
+import org.springframework.test.annotation.Commit;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -100,6 +103,7 @@ class UserRepositoryTest {
     }
 
     @Test
+    @Commit
     void checkAuditing(){
         User user = userRepository.findById(1L).get();
         user.setBirthDate(user.getBirthDate().plusYears(1L));
