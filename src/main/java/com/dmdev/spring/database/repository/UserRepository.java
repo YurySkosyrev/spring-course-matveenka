@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.history.RevisionRepository;
 
 import javax.persistence.LockModeType;
@@ -19,7 +20,8 @@ import java.util.Optional;
 public interface UserRepository extends
         JpaRepository<User, Long>,
         FilterUserRepository,
-        RevisionRepository<User, Long, Integer> {
+        RevisionRepository<User, Long, Integer>,
+        QuerydslPredicateExecutor<User> {
 
     @Query("select u from User u where " +
             "u.firstname like %:firstName% and u.lastname like %:lastName%")

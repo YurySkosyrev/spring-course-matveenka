@@ -97,7 +97,7 @@ class UserRepositoryTest {
 
     @Test
     void checkCustomImpl(){
-        UserFilter filter = new UserFilter(null, "%ov%", LocalDate.now());
+        UserFilter filter = new UserFilter(null, "ov", LocalDate.now());
         List<User> users = userRepository.findAllByFilter(filter);
         System.out.println();
     }
