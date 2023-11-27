@@ -1,18 +1,18 @@
 package com.dmdev.spring.integration.database.repository;
 
 import com.dmdev.spring.database.repository.UserRepository;
+import com.dmdev.spring.dto.PersonalInfo;
 import com.dmdev.spring.dto.PersonalInfoIfc;
 import com.dmdev.spring.dto.UserFilter;
 import com.dmdev.spring.entity.Role;
 import com.dmdev.spring.entity.User;
 import com.dmdev.spring.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Comment;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 import org.springframework.test.annotation.Commit;
 
 import java.time.LocalDate;
@@ -110,4 +110,18 @@ class UserRepositoryTest {
         userRepository.flush();
         System.out.println();
     }
+
+    @Test
+    void checkJdbcTemplate() {
+        List<PersonalInfo> users = userRepository.findAllByCompanyIdAndRole(1, Role.USER);
+        assertThat(users).hasSize(1);
+    }
+
+    @Test
+    void checkBatch() {
+        List<User> users = userRepository.findAll();
+        userRepository.updateCompanyAndRole(users);
+        System.out.println();
+    }
+
 }
