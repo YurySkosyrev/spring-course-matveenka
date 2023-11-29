@@ -1,6 +1,7 @@
 package com.dmdev.spring.http.controller;
 
 import com.dmdev.spring.dto.UserDto;
+import com.dmdev.spring.entity.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +11,21 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.net.http.HttpRequest;
+import java.util.Arrays;
+import java.util.List;
 
 @RequestMapping("/app/v1")
 @Controller
 @SessionAttributes({"user"})
 public class GreetingController {
 
+    @ModelAttribute("roles")
+    List<Role> roles(){
+        return Arrays.asList(Role.values());
+    }
+
     @GetMapping("/hello")
-    public String hello(Model model, HttpServletRequest httpRequest){
+    public String hello(Model model, HttpServletRequest httpRequest, UserDto dto){
 
         model.addAttribute("user", new UserDto(1, "ures"));
 
