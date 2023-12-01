@@ -2,9 +2,11 @@ package com.dmdev.spring.http.controller;
 
 import com.dmdev.spring.dto.UserCreateEditDto;
 import com.dmdev.spring.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping("/users")
@@ -18,14 +20,18 @@ public class UserController {
 
     @GetMapping
     public String findAll(Model model){
-//        model.addAttribute("users", userService.findAll());
+        model.addAttribute("users", userService.findAll());
         return "user/users";
     }
 
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable("id") Long id){
-//        model.addAttribute("user", userService.findByID(id));
-        return "user/user";
+        return userService.findById(id)
+                .map(user -> {
+                    model.addAttribute("user", user);
+                    return "user/user";
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
