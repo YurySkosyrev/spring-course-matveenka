@@ -4,9 +4,11 @@ import com.dmdev.spring.dto.CompanyReadDTO;
 import com.dmdev.spring.dto.UserReadDto;
 import com.dmdev.spring.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
 public class UserReadMapper implements Mapper<User, UserReadDto>{
 

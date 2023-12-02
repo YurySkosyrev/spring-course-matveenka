@@ -7,12 +7,14 @@ import com.dmdev.spring.mapper.UserCreateEditMapper;
 import com.dmdev.spring.mapper.UserReadMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserRepository userRepository;
@@ -31,12 +33,32 @@ public class UserService {
                 .map(userReadMapper::map);
     }
 
+    @Transactional
     public UserReadDto create(UserCreateEditDto userCreateEditDto) {
         return Optional.of(userCreateEditDto)
                 .map(userCreateEditMapper::map)
                 .map(userRepository::save)
                 .map(userReadMapper::map)
                 .orElseThrow();
+    }
+
+    @Transactional
+    public Optional<UserReadDto> update(Long id, UserCreateEditDto userCreateEditDto) {
+        return userRepository.findById(id)
+                .map(entity -> userCreateEditMapper.map(userCreateEditDto, entity))
+                .map(userRepository::saveAndFlush)
+                .map(userReadMapper::map);
+    }
+
+    @Transactional
+    public boolean delete(Long id){
+        return userRepository.findById(id)
+                .map(entity -> {
+                    userRepository.delete(entity);
+                    userRepository.flush();
+                    return true;
+                })
+                .orElse(false);
     }
 
 }

@@ -35,22 +35,25 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public String create(UserCreateEditDto user){
-//        userService.create(user);
-        return "redirect:users/" + 25;
+        return "redirect:users/" + userService.create(user).getId();
     }
 
 //    @PutMapping("/{id}")
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Long id, UserCreateEditDto user){
-//        userService.update(id, user);
-        return "redirect:/users/{id}";
+        return userService.update(id, user)
+                .map(it -> "redirect:/users/{id}")
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
 //    @DeleteMapping("/{id}")
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id){
-//        userService.delete(id);
+        if (!userService.delete(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
         return "redirect:/users";
     }
 }
